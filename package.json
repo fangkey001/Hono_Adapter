@@ -1,0 +1,18 @@
+{
+  "name": "hono-adapter",
+  "scripts": {
+    "dev": "bun run --hot src/app/index.ts"
+  },
+  "prisma": {
+    "seed": "bun prisma/seed.ts"
+  },
+  "dependencies": {
+    "@prisma/client": "^6.4.1",
+    "hono": "^4.7.2",
+    "zod": "^3.24.2"
+  },
+  "devDependencies": {
+    "@types/bun": "latest",
+    "prisma": "^6.4.1"
+  }
+}
