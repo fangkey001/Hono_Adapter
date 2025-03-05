@@ -1,7 +1,7 @@
 {
   "name": "hono-adapter",
   "scripts": {
-    "dev": "bun run --hot src/app/index.ts"
+    "dev": "bun run --hot src/config/app.ts"
   },
   "prisma": {
     "seed": "bun prisma/seed.ts"

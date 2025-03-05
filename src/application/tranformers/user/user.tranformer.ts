@@ -1,5 +1,5 @@
 import { Transformer } from "../base.transformer";
-import { UserEntity } from "@/domains/user/user.entity";
+import { UserEntity } from "@/core/domain/entities/user.entity";
 
 export type UserTransformedResult = {
   id: number;

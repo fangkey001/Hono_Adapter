@@ -1,5 +1,5 @@
 import { PrismaClient } from "@prisma/client";
-import { prisma } from "@/configs/database";
+import prisma from "./database/connection";
 
 export class BaseRepository<T> {
   constructor(private model: keyof Omit<PrismaClient, `$${string}`>) {}

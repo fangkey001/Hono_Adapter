@@ -1,5 +1,5 @@
+import { Meta } from "@/application/controllers/baseController";
 import { BaseError } from "@/types/baseError.type";
-import { Meta } from "@/controller/base.controller";
 
 export type Result<T, TMeta = Meta> =
   | {
