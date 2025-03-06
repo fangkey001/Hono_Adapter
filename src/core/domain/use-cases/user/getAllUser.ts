@@ -8,13 +8,27 @@ interface IPayload {
   perPage: number;
 }
 
-export class GetUserAll extends UseCase<IPayload, UserEntity[], Meta | null> {
+export class GetAllUser extends UseCase<IPayload, UserEntity[], Meta | null> {
   constructor(private userRepository: IUserRepository) {
     super();
   }
 
   async excute(payload: IPayload): Promise<Result<UserEntity[], Meta>> {
     const user = await this.userRepository.index(payload.page, payload.perPage);
+
+    if (!user.success) {
+      const error = {
+        code: user.errorCode,
+        status: 500,
+        message: user.message,
+        requestId: user.requestId,
+      };
+
+      return this.error({
+        error,
+        message: error.message,
+      });
+    }
 
     return this.success({
       data: user.data ?? [],

@@ -1,16 +1,11 @@
 import { Result } from "@/core/domain/use-cases/baseUseCase";
 import { BaseRepository } from "../baseRepository";
-import {
-  BaseController,
-  Meta,
-} from "../../application/controllers/baseController";
+import { Meta } from "../../application/controllers/baseController";
+import { ErrorHandler } from "@/application/utils/errorHandler.util";
 import { IUserRepository } from "@/core/repositories/user/userRepository";
 import { UserEntity } from "@/core/domain/entities/user.entity";
 
-export class UserRepositoryImpl
-  extends BaseController
-  implements IUserRepository
-{
+export class UserRepositoryImpl implements IUserRepository {
   private userRepository = new BaseRepository<UserEntity>("user");
 
   async index(
@@ -26,11 +21,9 @@ export class UserRepositoryImpl
         meta: Meta.fromPagination(total, page, perPage),
       };
     } catch (error) {
-      return {
-        success: false,
-        message: "",
-        errorCode: "",
-      };
+      const errorDetails = ErrorHandler.handle(error);
+
+      return ErrorHandler.toResult<UserEntity[]>(errorDetails);
     }
   }
 

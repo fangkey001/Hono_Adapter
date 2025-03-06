@@ -1,23 +1,31 @@
 import { Context } from "hono";
 import { BaseController } from "../baseController";
-import { TransformManager } from "@/application/tranformers/base.transformer";
-import { UserTransformer } from "@/application/tranformers/user/user.tranformer";
+import { TransformManager } from "@/application/tranformers/baseTransformer";
+import { UserTransformer } from "@/application/tranformers/user/userTranformer";
 import { ReasonPhrases } from "@/application/constants/reason-phrases.constant";
-import { GetUserAll } from "@/core/domain/use-cases/user/getAllUser";
+import { GetAllUser } from "@/core/domain/use-cases/user/getAllUser";
 
 export class UserController extends BaseController {
-  constructor(private getUserAll: GetUserAll) {
+  constructor(private GetAllUser: GetAllUser) {
     super();
   }
 
   async index(context: Context) {
     try {
-      const { page, perPage } = context.req.param();
+      const { page, perPage } = context.req.query();
 
-      const result = await this.getUserAll.excute({
+      const result = await this.GetAllUser.excute({
         page: Number(page) || 1,
         perPage: Number(perPage) || 10,
       });
+
+      if (!result.success) {
+        return this.errorResponse(
+          context,
+          result.errorMessage ?? "Unknow",
+          result.status
+        );
+      }
 
       if (result.success && result.data) {
         const transformerUsers = await TransformManager.collection(

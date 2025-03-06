@@ -1,4 +1,4 @@
-import { Transformer } from "../base.transformer";
+import { Transformer } from "../baseTransformer";
 import { UserEntity } from "@/core/domain/entities/user.entity";
 
 export type UserTransformedResult = {
